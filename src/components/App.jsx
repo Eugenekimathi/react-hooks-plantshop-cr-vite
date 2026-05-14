@@ -11,17 +11,19 @@ function App() {
       .then(data => setPlants(data));
   }, []);
 
-  const addPlant = async (plant) => {
-    await fetch("http://localhost:6001/plants", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(plant),
-    });
-    // refresh list
-    fetch("http://localhost:6001/plants")
-      .then(res => res.json())
-      .then(data => setPlants(data));
-  };
+ const addPlant = async (plant) => {
+  const response = await fetch("http://localhost:6001/plants", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(plant),
+  });
+
+  const newPlant = await response.json();
+
+  setPlants((prevPlants) => [...prevPlants, newPlant]);
+};
 
   const filteredPlants = plants.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
