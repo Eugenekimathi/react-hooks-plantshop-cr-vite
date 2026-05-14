@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Headers } from "./Header";
 import PlantPage from "./PlantPage";
 
 function App() {
@@ -14,15 +15,14 @@ function App() {
  const addPlant = async (plant) => {
   const response = await fetch("http://localhost:6001/plants", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(plant),
   });
 
-  const newPlant = await response.json();
+       const newPlant = await response.json();
 
-  setPlants((prevPlants) => [...prevPlants, newPlant]);
+  setPlants((prev) => [...prev, newPlant]);
+
 };
 
   const filteredPlants = plants.filter((p) =>
